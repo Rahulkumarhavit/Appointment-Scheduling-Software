@@ -24,7 +24,7 @@ app.get("/",(req:Request,res:Response,next:NextFunction)=>{
     })
 })
 
-app.use(errorHandler)
+// app.use(errorHandler)
 
 app.listen(config.PORT, async ()=> {
     console.log(`Server listening at ${config.PORT} in ${config.NODE_ENV}`)
