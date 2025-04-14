@@ -3,6 +3,8 @@ import express, {NextFunction,Request,Response} from "express";
 import cors from "cors";
 import { config } from "./config/app.config";
 import { HTTPSTATUS } from "./config/http.config";
+import { errorHandler } from "./middlewares/errorHandler.middleware";
+import { asyncHandler } from "./middlewares/asyncHandler.middleware";
 
 
 const app = express();
@@ -18,13 +20,14 @@ app.use(
     })
 );
 
-app.get("/",(req:Request,res:Response,next:NextFunction)=>{
+app.get("/",asyncHandler(async(req:Request,res:Response,next:NextFunction)=>{
+    throw new Error("throwing async error")
     res.status(HTTPSTATUS.OK).json({
         message:"hello backend working"
     })
-})
+}))
 
-// app.use(errorHandler)
+app.use(errorHandler)
 
 app.listen(config.PORT, async ()=> {
     console.log(`Server listening at ${config.PORT} in ${config.NODE_ENV}`)
